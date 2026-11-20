@@ -1,0 +1,25 @@
+# Anybuild definition for Wasmer: https://anybuild.run
+# Builds this repo as a Node.js server on Edge.js and asks Wasmer for a managed Postgres database,
+# so every deploy of this template gets its own n8n instance and its own database.
+
+load("//anybuild/tools:node.bzl", "node_build", "node_config", "node_serve")
+load("//anybuild:services.bzl", "postgres")
+
+config = node_config(
+    schema = 1,
+    commands = {
+        "start": "node server.js",
+    },
+    services = [postgres()],
+    node_package_manager = "npm",
+    node_server = "node",
+    node_version = "24",
+    # QuickJS is the Edge.js engine this template is tested with (worker threads work on it).
+    edgejs_engine = "quickjs",
+    # n8n loads its nodes dynamically, so keep node_modules as installed instead of tracing it.
+    optimize_node_dependencies = False,
+)
+
+build = node_build(config)
+
+node_serve(config, build, name = "n8n")

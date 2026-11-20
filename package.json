@@ -1,0 +1,19 @@
+{
+  "name": "n8n-wasmer-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "One-click n8n on Wasmer Edge: every deploy gets its own instance and database, with no separate n8n sign-up.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "node scripts/edgejs-compat.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "n8n": "2.48.6",
+    "pg": "8.21.0"
+  }
+}
